@@ -1,24 +1,41 @@
 <?php
-include 'includes/functions.php'; 
 include 'includes/header.php'; 
-include 'includes/db.php';
+include 'includes/db.php'; // Correct path to db.php
 
-// Start the session
-startSession();
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-// Check if the user is logged in
-if (!isset($_SESSION['username'])) {
-    header("Location: login.php");
-    exit();
+    if (!empty($username) && !empty($password)) {
+        $stmt = $pdo->prepare("SELECT password FROM users WHERE username = :username");
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result && password_verify($password, $result['password'])) {
+            $_SESSION['username'] = $username;
+            header("Location: dashboard.php");
+            exit();
+        } else {
+            echo "<div class='alert alert-danger'>Invalid username or password.</div>";
+        }
+    }
 }
-
-// Your dashboard content
 ?>
 
 <div class="container">
-    <h2 class="my-4">Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h2>
-    <p>Here's your dashboard where you can manage your account and projects.</p>
-    <!-- Add your dashboard features here -->
+    <h2 class="my-4">Login</h2>
+    <form method="POST" action="">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
 </div>
 
 <?php include 'includes/footer.php'; ?>
