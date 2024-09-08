@@ -1,34 +1,24 @@
 <?php
-include 'includes/functions.php'; 
 include 'includes/header.php'; 
-include 'includes/db.php'; // Ensure this is the correct path
-
-// Start the session
-startSession();
+include 'includes/db.php'; // Correct path to db.php
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = trim($_POST['username']);
-    $password = trim($_POST['password']);
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
     if (!empty($username) && !empty($password)) {
-        try {
-            $stmt = $pdo->prepare("SELECT password FROM users WHERE username = :username");
-            $stmt->bindParam(':username', $username);
-            $stmt->execute();
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt = $pdo->prepare("SELECT password FROM users WHERE username = :username");
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($result && password_verify($password, $result['password'])) {
-                $_SESSION['username'] = $username;
-                header("Location: dashboard.php");
-                exit();
-            } else {
-                echo "<div class='alert alert-danger'>Invalid username or password.</div>";
-            }
-        } catch (PDOException $e) {
-            echo "<div class='alert alert-danger'>Database error: " . $e->getMessage() . "</div>";
+        if ($result && password_verify($password, $result['password'])) {
+            $_SESSION['username'] = $username;
+            header("Location: dashboard.php");
+            exit();
+        } else {
+            echo "<div class='alert alert-danger'>Invalid username or password.</div>";
         }
-    } else {
-        echo "<div class='alert alert-danger'>Username and password cannot be empty.</div>";
     }
 }
 ?>
