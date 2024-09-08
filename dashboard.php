@@ -1,4 +1,5 @@
 <?php
+ob_start();
 include 'includes/functions.php'; // Correct filename
 include 'includes/header.php'; 
 
@@ -17,4 +18,6 @@ if (!isset($_SESSION['username'])) {
     <!-- Add your dashboard features here -->
 </div>
 
-<?php include 'includes/footer.php'; ?>
+<?php include 'includes/footer.php'; 
+ob_end_flush();
+?>
