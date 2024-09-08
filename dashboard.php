@@ -2,6 +2,7 @@
 ob_start();
 include 'includes/functions.php'; // Correct filename
 include 'includes/header.php'; 
+include 'includes/db.php';
 
 // Check if the user is logged in
 if (!isset($_SESSION['username'])) {
