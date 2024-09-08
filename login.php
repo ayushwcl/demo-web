@@ -1,6 +1,10 @@
 <?php
+include 'includes/functions.php'; 
 include 'includes/header.php'; 
-include 'includes/db.php'; // Correct path to db.php
+include 'includes/db.php'; // Ensure this is the correct path
+
+// Start the session
+startSession();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
