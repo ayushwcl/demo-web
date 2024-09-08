@@ -1,8 +1,6 @@
 <?php
-include 'includes/functions.php'; // Correct file name
-
-// Start the session if it's not already started
-startSession();
+include 'includes/functions.php'; // Ensure this path is correct
+startSession(); // Start the session to access $_SESSION
 ?>
 <!DOCTYPE html>
 <html lang="en">
