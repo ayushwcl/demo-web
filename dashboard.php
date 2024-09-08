@@ -1,8 +1,10 @@
 <?php
-ob_start();
-include 'includes/functions.php'; // Correct filename
+include 'includes/functions.php'; 
 include 'includes/header.php'; 
 include 'includes/db.php';
+
+// Start the session
+startSession();
 
 // Check if the user is logged in
 if (!isset($_SESSION['username'])) {
@@ -19,6 +21,4 @@ if (!isset($_SESSION['username'])) {
     <!-- Add your dashboard features here -->
 </div>
 
-<?php include 'includes/footer.php'; 
-ob_end_flush();
-?>
+<?php include 'includes/footer.php'; ?>
