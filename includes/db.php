@@ -1,8 +1,8 @@
 <?php
-$host = 'localhost'; // Database host
+$host = 'myazprosvr.mysql.database.azure.com'; // Database host
 $dbname = 'documnet_collaboration_system'; // Database name
-$username = 'root'; // Database username
-$password = ''; // Database password
+$username = 'rani'; // Database username
+$password = 'Server@1'; // Database password
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
